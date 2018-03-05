@@ -1,9 +1,30 @@
 <html>
 <head>
+<title> Login </title>
 <script src="SecurityManager.js"></script>
+<script>
+function main() {
+
+    var btn=document.getElementById('btnLogin');
+    btn.onclick = function() {
+        var login=document.getElementById('txtLogin').value;
+        var password=document.getElementById('txtPassword').value;
+        var result=SecurityManager.ValidateAdmin(login,password);
+        if(result==true)
+        {
+            window.location.href="adminHome.php";
+        }
+        else
+        {
+            alert("Invalid UserName/Password");
+        }
+        
+    }
+}
+</script>
 <head>
 
-<body>
+<body onload="main();">
     <div style="border:1px solid red; width:300px; float:left;">
         <h1>Admin Login</h1>
             <div>
