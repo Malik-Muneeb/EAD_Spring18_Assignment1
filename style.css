@@ -1,0 +1,14 @@
+*{
+	margin:0px;
+}
+
+div.menu{
+	padding:5px;
+	margin-top:5px;
+}
+
+dic.menu a{
+	background-color:lightgrey;
+	padding:5px;
+	margin-left:2px
+}
