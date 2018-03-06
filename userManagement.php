@@ -29,36 +29,90 @@ function main() {
         }   
     }//end of onchange
 
-    function grid() {
+    var grid=function (){
         var userObjArr=SecurityManager.GetAllUsers();   
         var table = document.createElement("TABLE");
         table.setAttribute("id", "myTable");
+        table.setAttribute("border","1");
         document.body.appendChild(table);
 
         var row = document.createElement("TR");
         row.setAttribute("id", "myTr");
         document.getElementById("myTable").appendChild(row);
-        
-        var heading = document.createElement("TH");
-        heading.setAttribute("id", "myTh");
-        document.getElementById("myTable").appendChild(heading);
 
-      
+        var idHeading = document.createElement("TH");
+        var id=document.createTextNode("ID");
+        idHeading.appendChild(id);
+        idHeading.setAttribute("id", "idHeading");
+        document.getElementById("myTr").appendChild(idHeading);
+
+        var nameHeading = document.createElement("TH");
+        var name=document.createTextNode("Name");
+        nameHeading.appendChild(name);
+        nameHeading.setAttribute("id", "nameHeading");
+        document.getElementById("myTr").appendChild(nameHeading);
+
+        var emailHeading = document.createElement("TH");
+        var email=document.createTextNode("Email");
+        emailHeading.appendChild(email);
+        emailHeading.setAttribute("id", "emailHeading");
+        document.getElementById("myTr").appendChild(emailHeading);
+
+        var delHeading = document.createElement("TH");
+        var del=document.createTextNode("Delete");
+        delHeading.appendChild(del);
+        delHeading.setAttribute("id", "delHeading");
+        document.getElementById("myTr").appendChild(delHeading);
+
+        var editHeading = document.createElement("TH");
+        var edit=document.createTextNode("Edit");
+        editHeading.appendChild(edit);
+        editHeading.setAttribute("id", "editHeading");
+        document.getElementById("myTr").appendChild(editHeading);
+
+        
         for(var i=0; i<userObjArr.length; i++)
         {    
-              var row = document.createElement("TR");
-        row.setAttribute("id", "myTr");
-        document.getElementById("myTable").appendChild(row);
+            var row = document.createElement("TR");
+            row.setAttribute("id", "myTr"+i);
+            document.getElementById("myTable").appendChild(row);
+        
+            var cell = document.createElement("TD");
+            var text = document.createTextNode(userObjArr[i].ID);
+            cell.appendChild(text);
+            document.getElementById("myTr"+i).appendChild(cell);
 
-        var z = document.createElement("TD");
-        var t = document.createTextNode("cell");
-        z.appendChild(t);
-        document.getElementById("myTr").appendChild(z);
-           console.log(userObjArr[i].name);
+            cell = document.createElement("TD");
+            text = document.createTextNode(userObjArr[i].name);
+            cell.appendChild(text);
+            document.getElementById("myTr"+i).appendChild(cell);
+
+            cell = document.createElement("TD");
+            text = document.createTextNode(userObjArr[i].email);
+            cell.appendChild(text);
+            document.getElementById("myTr"+i).appendChild(cell);
+
+            cell = document.createElement("TD");
+            var link = document.createElement("A");
+            text = document.createTextNode("Delete");
+            link.setAttribute("href", "#");
+            link.appendChild(text);
+            cell.appendChild(link);
+            document.getElementById("myTr"+i).appendChild(cell);
+
+            cell = document.createElement("TD");
+            link = document.createElement("A");
+            text = document.createTextNode("Edit");
+            link.setAttribute("href", "#");
+            link.appendChild(text);
+            cell.appendChild(link);
+            document.getElementById("myTr"+i).appendChild(cell);
+
+            console.log(userObjArr[i]);
         }
     }
 
-    var gridFunc=grid;
+    grid();
     var btnSave=document.getElementById("btnSave");
     btnSave.onclick=function() {
         var userObjArr=SecurityManager.GetAllUsers();
