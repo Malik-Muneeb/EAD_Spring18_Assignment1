@@ -14,12 +14,12 @@ function main() {
 
 <body onload="main();">
     <div  class="menu">
-        <a href="#" >Home</a>
-        <a href="#" >User Management</a>
-        <a href="#" >Role Management</a>
-        <a href="#" >Permissions Management</a>
-        <a href="#" >Role-Permissions Assignment</a>
-        <a href="#" >Useer-Role Assignment</a>
+        <a href="adminHome.php" >Home</a>
+        <a href="userManagement.php" >User Management</a>
+        <a href="roleManagement.php" >Role Management</a>
+        <a href="permissionManagement.php" >Permissions Management</a>
+        <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a>
+        <a href="userRoleAssignment.php" >User-Role Assignment</a>
         <a href="login.php" >Logout</a>
     </div>
 
