@@ -14,7 +14,6 @@ function main() {
         opt.innerText = countries[i].Name;
         cmb.appendChild(opt);
     }
-
     cmb.onchange = function(){
         var citycmb = document.getElementById('cmbCities');
         //Remove all child elements (e.g. options)
@@ -29,6 +28,12 @@ function main() {
         }   
     }//end of onchange
 
+	
+	function delUser(hyperObj) {
+		console.log(hyperObj);
+	}
+	
+	//start grid function
     var grid=function (){
         var userObjArr=SecurityManager.GetAllUsers();   
         var table = document.createElement("TABLE");
@@ -70,6 +75,7 @@ function main() {
         editHeading.setAttribute("id", "editHeading");
         document.getElementById("myTr").appendChild(editHeading);
 
+		debugger;
         
         for(var i=0; i<userObjArr.length; i++)
         {    
@@ -92,10 +98,13 @@ function main() {
             cell.appendChild(text);
             document.getElementById("myTr"+i).appendChild(cell);
 
+			
             cell = document.createElement("TD");
             var link = document.createElement("A");
             text = document.createTextNode("Delete");
             link.setAttribute("href", "#");
+			link.setAttribute("onclick","delUser(this)");
+			link.setAttribute("id", userObjArr[i].ID);
             link.appendChild(text);
             cell.appendChild(link);
             document.getElementById("myTr"+i).appendChild(cell);
@@ -110,40 +119,31 @@ function main() {
 
             console.log(userObjArr[i]);
         }
-    }
-
+    }	//end grid function
+	
     grid();
+	
     var btnSave=document.getElementById("btnSave");
-    btnSave.onclick=function() {
+    btnSave.onclick=function() {	//start save function
         var userObjArr=SecurityManager.GetAllUsers();
-        var txtLogin=document.getElementById("txtLogin").value;
-        var txtPassword=document.getElementById("txtPassword").value;
-        var txtName=document.getElementById("txtName").value;
-        var txtEmail=document.getElementById("txtEmail").value;
+		var userObj=new Object();
+        userObj.login=document.getElementById("txtLogin").value;
+        userObj.password=document.getElementById("txtPassword").value;
+        userObj.name=document.getElementById("txtName").value;
+        userObj.email=document.getElementById("txtEmail").value;
         var countries = document.getElementById("cmbCountries");
-        var countryName = countries.options[countries.selectedIndex].text;
+        userObj.country = countries.options[countries.selectedIndex].text;
         var cities = document.getElementById("cmbCities");
-        var cityName = cities.options[cities.selectedIndex].text;
-        console.log(txtLogin);
-        console.log(txtPassword);
-        console.log(txtName);
-        console.log(txtEmail);
-        console.log(countryName);
-        console.log(cityName);
-        var userObj=new Object();
-        userObj.login=txtLogin;
-        userObj.password=txtPassword;
-        userObj.name=txtName;
-        userObj.email=txtEmail;
-        userObj.country=countryName;
-        userObj.city=cityName;
+		userObj.city = cities.options[cities.selectedIndex].text;
+        
         var isLoginExist=false;
         var isEmailExist=false;
-        if(userObjArr.length==0)
-        {
-            var check=SecurityManager.SaveUser(userObj);
-            console.log(check);
-        }
+        if(userObjArr.length==0)        
+		{
+			var check=SecurityManager.SaveUser(userObj,function(i) { alert("User Added Successfully! ID is "+i.ID);
+						location.reload();}, function() { alert ("User does not added")} );
+			
+		}					
         else 
         {
             for(var i=0; i<userObjArr.length && !isLoginExist && !isEmailExist ; i++)
@@ -160,13 +160,26 @@ function main() {
                 alert("Email Already Existed. Try another one!");
             else
             {
-                var check=SecurityManager.SaveUser(userObj);
-                console.log(check);
-                if(check==true)
-                    alert("User Added Successfully!");
+                var check=SecurityManager.SaveUser(userObj,function(i) { alert("User Added Successfully! ID is "+i.ID);
+						location.reload();}, function() { alert ("User does not added")} );
             }
         }
-    }
+    }	//end save function
+	
+	var btnClear=document.getElementById("btnClear");
+	btnClear.onclick = function()
+	{
+		document.getElementById("txtLogin").value="";
+        document.getElementById("txtPassword").value="";
+        document.getElementById("txtName").value="";
+        document.getElementById("txtEmail").value="";
+        var countries = document.getElementById("cmbCountries");
+        countries.options[countries.selectedIndex].text="--Select--";
+        var cities = document.getElementById("cmbCities");
+        cities.options[cities.selectedIndex].text="--Select--";
+	}
+	
+	
 }
 </script>
 <head>

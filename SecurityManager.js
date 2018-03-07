@@ -50,7 +50,7 @@ SecurityManager = (function () {
 
     function _loadDataFromLocalStorage() {
 
-        debugger;
+        
         if (window.localStorage) {
             if (window.localStorage[_users.key])
                 _users = JSON.parse(window.localStorage[_users.key]);
@@ -102,7 +102,6 @@ SecurityManager = (function () {
     //Create/Update
     function _save(obj, record, successFunction, errorFunction) {
 
-        debugger;
         //New Record
         if (!record.ID || record.ID <= 0) {
             record.ID = _getMaxId(obj.data) + 1;
