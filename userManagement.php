@@ -27,11 +27,6 @@ function main() {
             citycmb.appendChild(opt);
         }   
     }//end of onchange
-
-	
-	function delUser(hyperObj) {
-		console.log(hyperObj);
-	}
 	
 	//start grid function
     var grid=function (){
@@ -113,6 +108,8 @@ function main() {
             link = document.createElement("A");
             text = document.createTextNode("Edit");
             link.setAttribute("href", "#");
+			link.setAttribute("onclick","editUser(this)");
+			link.setAttribute("id", userObjArr[i].ID);
             link.appendChild(text);
             cell.appendChild(link);
             document.getElementById("myTr"+i).appendChild(cell);
@@ -181,6 +178,44 @@ function main() {
 	
 	
 }
+
+function delUser(hyperObj) {
+		var id=Number(hyperObj.id);
+		if(confirm("Do you want to continue ?"))
+			SecurityManager.DeleteUser(id,function(i) { alert("User Deleted Successfully! ID is "+i);
+						location.reload();}, function() { alert ("User does not deleted");} );
+		else
+			location.reload();
+	}
+	
+function editUser(hyperObj) {
+	var id=Number(hyperObj.id);
+	var userObj=SecurityManager.GetUserById(id);
+	document.getElementById("txtLogin").value=userObj.login;
+	document.getElementById("txtPassword").value=userObj.password;
+	document.getElementById("txtName").value=userObj.name;
+	document.getElementById("txtEmail").value=userObj.email;
+	var countries = document.getElementById("cmbCountries");
+	countries.options[countries.selectedIndex].text=userObj.country;
+	var cities = document.getElementById("cmbCities");
+	cities.options[cities.selectedIndex].text=userObj.city;
+	 var btnSave=document.getElementById("btnSave");
+    btnSave.onclick=function(){
+		var userObj1=new Object();
+		userObj1.ID=id;
+        userObj1.login=document.getElementById("txtLogin").value;
+        userObj1.password=document.getElementById("txtPassword").value;
+        userObj1.name=document.getElementById("txtName").value;
+        userObj1.email=document.getElementById("txtEmail").value;
+        var countries = document.getElementById("cmbCountries");
+        userObj1.country = countries.options[countries.selectedIndex].text;
+        var cities = document.getElementById("cmbCities");
+		userObj1.city = cities.options[cities.selectedIndex].text;	
+		SecurityManager.SaveUser(userObj1,function(i) { alert("Data Edit Successfully! ID is "+i.ID);
+						location.reload();}, function() { alert ("User does not edit")} );		
+	}
+	
+}
 </script>
 <head>
 
@@ -196,6 +231,7 @@ function main() {
     </div>
 
     <div>
+	<form>
         <h1>Users</h1>
         <span>Login: </span> <input type="text" id="txtLogin" ><br>
         <span>Password: </span> <input type="password" id="txtPassword" ><br>
@@ -205,6 +241,7 @@ function main() {
         <span>City: </span> <select name="" id="cmbCities"><option>--Select--</option></select><br><br>
         <input type="submit" id="btnSave" value="Save">
         <input type="submit" id="btnClear" value="Clear">
+	</form>
     </div>
    
 </body>
