@@ -19,7 +19,7 @@ function main() {
         <a href="roleManagement.php" >Role Management</a>
         <a href="permissionManagement.php" >Permissions Management</a>
         <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a>
-        <a href="userRoleAssignment.php" >User-Role Assignment</a>
+        <a href="userRoleManagement.php" >User-Role Assignment</a>
         <a href="login.php" >Logout</a>
     </div>
 

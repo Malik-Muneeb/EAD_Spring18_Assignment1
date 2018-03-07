@@ -6,9 +6,28 @@
 <script>
 function main() {
     
+    var user = SecurityManager.GetAllUsers();
+    cmb = document.getElementById('cmbUser')
+    for(var i=0;i<user.length;i++)
+    {
+        var opt = document.createElement("option");
+        opt.setAttribute("value",user[i].ID);
+        opt.innerText = user[i].name;
+        cmb.appendChild(opt);
+    }
+    var role = SecurityManager.GetAllRoles();
+    var cmb = document.getElementById('cmbRole')
+    for(var i=0;i<role.length;i++)
+    {
+        var opt = document.createElement("option");
+        opt.setAttribute("value",role[i].ID);
+        opt.innerText = role[i].roleName;
+        cmb.appendChild(opt);
+    }
+    
 	//start grid function
     var grid=function (){
-        var perObjArr=SecurityManager.GetAllPermissions();   
+        var userRoleObjArr=SecurityManager.GetAllUserRoles();   
         var table = document.createElement("TABLE");
         table.setAttribute("id", "myTable");
         table.setAttribute("border","1");
@@ -24,17 +43,17 @@ function main() {
         idHeading.setAttribute("id", "idHeading");
         document.getElementById("myTr").appendChild(idHeading);
 
-        var nameHeading = document.createElement("TH");
-        var name=document.createTextNode("Name");
-        nameHeading.appendChild(name);
-        nameHeading.setAttribute("id", "nameHeading");
-        document.getElementById("myTr").appendChild(nameHeading);
+        var userHeading = document.createElement("TH");
+        var user=document.createTextNode("User");
+        userHeading.appendChild(user);
+        userHeading.setAttribute("id", "userHeading");
+        document.getElementById("myTr").appendChild(userHeading);
 
-        var descHeading = document.createElement("TH");
-        var desc=document.createTextNode("Description");
-        descHeading.appendChild(desc);
-        descHeading.setAttribute("id", "descHeading");
-        document.getElementById("myTr").appendChild(descHeading);
+        var roleHeading = document.createElement("TH");
+        var role=document.createTextNode("Role");
+        roleHeading.appendChild(role);
+        roleHeading.setAttribute("id", "roleHeading");
+        document.getElementById("myTr").appendChild(roleHeading);
 
         var delHeading = document.createElement("TH");
         var del=document.createTextNode("Delete");
@@ -48,24 +67,24 @@ function main() {
         editHeading.setAttribute("id", "editHeading");
         document.getElementById("myTr").appendChild(editHeading);
         
-        for(var i=0; i<perObjArr.length; i++)
+        for(var i=0; i<userRoleObjArr.length; i++)
         {    
             var row = document.createElement("TR");
             row.setAttribute("id", "myTr"+i);
             document.getElementById("myTable").appendChild(row);
         
             var cell = document.createElement("TD");
-            var text = document.createTextNode(perObjArr[i].ID);
+            var text = document.createTextNode(userRoleObjArr[i].ID);
             cell.appendChild(text);
             document.getElementById("myTr"+i).appendChild(cell);
 
             cell = document.createElement("TD");
-            text = document.createTextNode(perObjArr[i].perName);
+            text = document.createTextNode(userRoleObjArr[i].user);
             cell.appendChild(text);
             document.getElementById("myTr"+i).appendChild(cell);
 
             cell = document.createElement("TD");
-            text = document.createTextNode(perObjArr[i].perDesc);
+            text = document.createTextNode(userRoleObjArr[i].role);
             cell.appendChild(text);
             document.getElementById("myTr"+i).appendChild(cell);
 
@@ -74,8 +93,8 @@ function main() {
             var link = document.createElement("A");
             text = document.createTextNode("Delete");
             link.setAttribute("href", "#");
-			link.setAttribute("onclick","delPer(this)");
-			link.setAttribute("id", perObjArr[i].ID);
+			link.setAttribute("onclick","delUserRole(this)");
+			link.setAttribute("id", userRoleObjArr[i].ID);
             link.appendChild(text);
             cell.appendChild(link);
             document.getElementById("myTr"+i).appendChild(cell);
@@ -84,8 +103,8 @@ function main() {
             link = document.createElement("A");
             text = document.createTextNode("Edit");
             link.setAttribute("href", "#");
-			link.setAttribute("onclick","editPer(this)");
-			link.setAttribute("id", perObjArr[i].ID);
+			link.setAttribute("onclick","editUserRole(this)");
+			link.setAttribute("id", userRoleObjArr[i].ID);
             link.appendChild(text);
             cell.appendChild(link);
             document.getElementById("myTr"+i).appendChild(cell);
@@ -96,56 +115,57 @@ function main() {
 	
     var btnSave=document.getElementById("btnSave");
     btnSave.onclick=function() {	//start save function
-        var perObjArr=SecurityManager.GetAllPermissions();
-		var perObj=new Object();
-        perObj.perName=document.getElementById("txtName").value;
-        perObj.perDesc=document.getElementById("txtDesc").value;
-        
-		var isPerExist=false;
-        for(var i=0; i<perObjArr.length && !isPerExist; i++)
-		{    
-			if(perObjArr[i].perName.toUpperCase()==perObj.perName.toUpperCase())
-				isPerExist=true;
-		}
-		if(isPerExist)
-			alert("Permission Already Existed. Try another One!");            
-		else
-		{
-			SecurityManager.SavePermission(perObj,function(i) { alert("Permission Added Successfully! ID is "+i.ID);
-					location.reload();}, function() { alert ("Permission does not added")} );
+        var userRoleObjArr=SecurityManager.GetAllUserRoles();
+		var userRoleObj=new Object();        
+        var user=document.getElementById("cmbUser");
+        userRoleObj.user=user.options[user.selectedIndex].text;
+        var role = document.getElementById("cmbRole");
+        userRoleObj.role = role.options[role.selectedIndex].text;
+        if(userRoleObj.user=="--Select--")
+            alert("First Select User."); 
+        else if(userRoleObj.role=="--Select--")
+            alert("First Select Role.");  
+        else
+        {
+			SecurityManager.SaveUserRole(userRoleObj,function(i) { alert("User-Role Added Successfully! ID is "+i.ID);
+					location.reload();}, function() { alert ("User-Role does not added")} );
 		}
     }	//end save function
 	
 	var btnClear=document.getElementById("btnClear");
 	btnClear.onclick = function()
 	{
-		document.getElementById("txtName").value="";
-        document.getElementById("txtDesc").value="";
+        var user=document.getElementById("cmbPer");
+        user.options[user.selectedIndex].text="--Select--";
+        var role = document.getElementById("cmbRole");
+        role.options[role.selectedIndex].text="--Select--";
 	}
 }
 
-function delPer(hyperObj) {
+function delUserRole(hyperObj) {
 		var id=Number(hyperObj.id);
 		if(confirm("Do you want to continue ?"))
-			SecurityManager.DeletePermission(id,function(i) { alert("Permission Deleted Successfully! ID is "+i);
-						location.reload();}, function() { alert ("Permission does not deleted");} );
+			SecurityManager.DeleteUserRole(id,function(i) { alert("User-Role Deleted Successfully! ID is "+i);
+						location.reload();}, function() { alert ("User-Role does not deleted");} );
 		else
 			location.reload();
 }
 	
-function editPer(hyperObj) {
+function editUserRole(hyperObj) {
 	var id=Number(hyperObj.id);
-	var perObj=SecurityManager.GetPermissionById(id);
-	document.getElementById("txtName").value=perObj.perName;
-	document.getElementById("txtDesc").value=perObj.perDesc;
+	var userRoleObj=SecurityManager.GetUserRoleById(id);
+    var user=document.getElementById("cmbUser");
+    user.options[user.selectedIndex].text=userRoleObj.user;
+    var role = document.getElementById("cmbRole");
+    role.options[role.selectedIndex].text=userRoleObj.role;
 	var btnSave=document.getElementById("btnSave");
     btnSave.onclick=function(){
-		var perObj1=new Object();
-		perObj1.ID=id;
-        perObj1.perName=document.getElementById("txtName").value;
-        perObj1.perDesc=document.getElementById("txtDesc").value;	
-		SecurityManager.SavePermission(perObj1,function(i) { alert("Data Edit Successfully! ID is "+i.ID);
-						location.reload();}, function() { alert ("Permission does not edit")} );		
+		var userRoleObj1=new Object();
+		userRoleObj1.ID=id;
+        userRoleObj1.user=user.options[user.selectedIndex].text;
+        userRoleObj1.role=role.options[role.selectedIndex].text;
+		SecurityManager.SaveUserRole(userRoleObj1,function(i) { alert("Data Edit Successfully! ID is "+i.ID);
+						location.reload();}, function() { alert ("Data does not edit")} );		
 	}
 	
 }
@@ -164,9 +184,9 @@ function editPer(hyperObj) {
 
     <div>
 		<form>
-			<h1>Permission Management</h1>
-			<span>Permission Name: </span> <input type="text" id="txtName" ><br>
-			<span>Description: </span> <input type="text" id="txtDesc" ><br>        
+			<h1>User-Role Management</h1>
+			<span>User: </span>  <select name="" id="cmbUser"><option>--Select--</option></select><br>
+			<span>Role: </span>  <select name="" id="cmbRole"><option>--Select--</option></select><br><br>
 			<input type="submit" id="btnSave" value="Save">
 			<input type="submit" id="btnClear" value="Clear">
 		</form>

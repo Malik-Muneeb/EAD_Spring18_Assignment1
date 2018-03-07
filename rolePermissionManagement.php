@@ -119,14 +119,15 @@ function main() {
         var role = document.getElementById("cmbRole");
         rolePerObj.role = role.options[role.selectedIndex].text;
         var per=document.getElementById("cmbPer");
-        rolePerObj.per=per.options[role.selectedIndex].text;
-        if(rolePerObj.role=="--Select--" && rolePerObj.per=="--Select--")
-            alert("First Select Role and Permission");  
+        rolePerObj.per=per.options[per.selectedIndex].text;
+        console.log(rolePerObj.per);
+        if(rolePerObj.role=="--Select--" )
+            alert("First Select Role.");
+        else if(rolePerObj.per=="--Select--")
+            alert("First Select Permission.");
         else
-        {
-			SecurityManager.SaveRolePermission(rolePerObj,function(i) { alert("Role-Permission Added Successfully! ID is "+i.ID);
-					location.reload();}, function() { alert ("Role-Permission does not added")} );
-		}
+            SecurityManager.SaveRolePermission(rolePerObj,function(i) { alert("Role-Permission Added Successfully! ID is "+i.ID);
+                    location.reload();}, function() { alert ("Role-Permission does not added")} );
     }	//end save function
 	
 	var btnClear=document.getElementById("btnClear");
@@ -135,7 +136,7 @@ function main() {
         var role = document.getElementById("cmbRole");
         role.options[role.selectedIndex].text="--Select--";
         var per=document.getElementById("cmbPer");
-        per.options[role.selectedIndex].text="--Select--";
+        per.options[per.selectedIndex].text="--Select--";
 	}
 }
 
@@ -175,7 +176,7 @@ function editRolePer(hyperObj) {
         <a href="roleManagement.php" >Role Management</a>
         <a href="permissionManagement.php" >Permissions Management</a>
         <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a>
-        <a href="userRoleAssignment.php" >User-Role Assignment</a>
+        <a href="userRoleManagement.php" >User-Role Assignment</a>
         <a href="login.php" >Logout</a>
     </div>
 
@@ -183,7 +184,7 @@ function editRolePer(hyperObj) {
 		<form>
 			<h1>Role-Permissions Management</h1>
 
-			<span>Role: <select name="" id="cmbRole"><option>--Select--</option></select><br>
+			<span>Role: </span><select name="" id="cmbRole"><option>--Select--</option></select><br>
 			<span>Permission: </span>  <select name="" id="cmbPer"><option>--Select--</option></select><br><br>
 			<input type="submit" id="btnSave" value="Save">
 			<input type="submit" id="btnClear" value="Clear">
