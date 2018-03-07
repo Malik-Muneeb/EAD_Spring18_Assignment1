@@ -69,8 +69,6 @@ function main() {
         editHeading.appendChild(edit);
         editHeading.setAttribute("id", "editHeading");
         document.getElementById("myTr").appendChild(editHeading);
-
-		debugger;
         
         for(var i=0; i<userObjArr.length; i++)
         {    
