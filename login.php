@@ -20,6 +20,22 @@ function main() {
         }
         
     }
+    var btn1=document.getElementById('btnLogin1');
+    btn1.onclick= function(){
+    	var userObjArr=SecurityManager.GetAllUsers();
+    	var login=document.getElementById('txtLogin1').value;
+        var password=document.getElementById('txtPassword1').value;
+        var isExist=false;
+        for(var i=0; i<userObjArr.length && !isExist; i++)
+        {
+        	if(userObjArr[i].login==login && userObjArr[i].password==password)
+        		isExist=true;
+        }
+        if(isExist)
+        	window.location.href="adminHome.php";
+        else
+        	alert("Invalid UserName/Password");
+    }
 }
 </script>
 <head>
