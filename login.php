@@ -32,7 +32,10 @@ function main() {
         		isExist=true;
         }
         if(isExist)
-        	window.location.href="adminHome.php";
+        {
+            window.location.href="userHome.php"//?name="+login;
+            localStorage.setItem('name', login);//to set value
+        }
         else
         	alert("Invalid UserName/Password");
     }
