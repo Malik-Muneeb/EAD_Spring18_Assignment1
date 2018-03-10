@@ -131,34 +131,49 @@ function main() {
         var cities = document.getElementById("cmbCities");
 		userObj.city = cities.options[cities.selectedIndex].text;
         
-        var isLoginExist=false;
-        var isEmailExist=false;
-        if(userObjArr.length==0)        
-		{
-			var check=SecurityManager.SaveUser(userObj,function(i) { alert("User Added Successfully! ID is "+i.ID);
-						location.reload();}, function() { alert ("User does not added")} );
-			
-		}					
-        else 
-        {
-            for(var i=0; i<userObjArr.length && !isLoginExist && !isEmailExist ; i++)
-            {    
-                if(userObjArr[i].login==userObj.login)
-                    isLoginExist=true;
-                else if(userObjArr[i].email==userObj.email)
-                    isEmailExist=true; 
-                console.log(userObjArr[i].name);
-            }
-            if(isLoginExist)
-                alert("Login Already Existed. Try another One!");
-            else if(isEmailExist)
-                alert("Email Already Existed. Try another one!");
-            else
+        if(userObj.login=="")
+            alert("Enter Login!");
+        else if(userObj.password=="" || userObj.password.length <8)
+            alert("Enter password and size of password must greater than 8");
+        else if(userObj.name=="")
+            alert("Enter Name!");
+        else if(userObj.email=="")
+            alert("Enter Email")
+        else if(userObj.country=="--Select--")
+            alert("Select Country!");
+        else if(userObj.city=="--Select--")
+            alert("Select City!");
+        else
             {
-                var check=SecurityManager.SaveUser(userObj,function(i) { alert("User Added Successfully! ID is "+i.ID);
-						location.reload();}, function() { alert ("User does not added")} );
+                var isLoginExist=false;
+                var isEmailExist=false;
+                if(userObjArr.length==0)        
+                {
+                    var check=SecurityManager.SaveUser(userObj,function(i) { alert("User Added Successfully! ID is "+i.ID);
+                                location.reload();}, function() { alert ("User does not added")} );
+
+                }					
+                else 
+                {
+                    for(var i=0; i<userObjArr.length && !isLoginExist && !isEmailExist ; i++)
+                    {    
+                        if(userObjArr[i].login==userObj.login)
+                            isLoginExist=true;
+                        else if(userObjArr[i].email==userObj.email)
+                            isEmailExist=true; 
+                        console.log(userObjArr[i].name);
+                    }
+                    if(isLoginExist)
+                        alert("Login Already Existed. Try another One!");
+                    else if(isEmailExist)
+                        alert("Email Already Existed. Try another one!");
+                    else
+                    {
+                        var check=SecurityManager.SaveUser(userObj,function(i) { alert("User Added Successfully! ID is "+i.ID);
+                                location.reload();}, function() { alert ("User does not added")} );
+                    }
+                }
             }
-        }
     }	//end save function
 	
 	var btnClear=document.getElementById("btnClear");
@@ -234,11 +249,11 @@ function editUser(hyperObj) {
         <span>Login: </span> <input type="text" id="txtLogin" ><br>
         <span>Password: </span> <input type="password" id="txtPassword" ><br>
         <span>Name: </span> <input type="text" id="txtName" ><br>
-        <span>Email: </span> <input type="text" id="txtEmail" ><br>
+        <span>Email: </span> <input type="email" id="txtEmail" ><br>
         <span>Country: </span> <select name="" id="cmbCountries"><option>--Select--</option></select><br>
         <span>City: </span> <select name="" id="cmbCities"><option>--Select--</option></select><br><br>
-        <input type="submit" id="btnSave" value="Save">
-        <input type="submit" id="btnClear" value="Clear">
+        <input type="button" id="btnSave" value="Save">
+        <input type="button" id="btnClear" value="Clear">
 	</form>
     </div>
    

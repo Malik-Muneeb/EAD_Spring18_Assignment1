@@ -120,7 +120,6 @@ function main() {
         rolePerObj.role = role.options[role.selectedIndex].text;
         var per=document.getElementById("cmbPer");
         rolePerObj.per=per.options[per.selectedIndex].text;
-        console.log(rolePerObj.per);
         if(rolePerObj.role=="--Select--" )
             alert("First Select Role.");
         else if(rolePerObj.per=="--Select--")
@@ -186,8 +185,8 @@ function editRolePer(hyperObj) {
 
 			<span>Role: </span><select name="" id="cmbRole"><option>--Select--</option></select><br>
 			<span>Permission: </span>  <select name="" id="cmbPer"><option>--Select--</option></select><br><br>
-			<input type="submit" id="btnSave" value="Save">
-			<input type="submit" id="btnClear" value="Clear">
+			<input type="button" id="btnSave" value="Save">
+			<input type="button" id="btnClear" value="Clear">
 		</form>
     </div>
    

@@ -101,19 +101,26 @@ function main() {
         roleObj.roleName=document.getElementById("txtName").value;
         roleObj.roleDesc=document.getElementById("txtDesc").value;
         
-		var isRoleExist=false;
-        for(var i=0; i<roleObjArr.length && !isRoleExist; i++)
-		{    
-			if(roleObjArr[i].roleName.toUpperCase()==roleObj.roleName.toUpperCase())
-				isRoleExist=true;
-		}
-		if(isRoleExist)
-			alert("Role Already Existed. Try another One!");            
-		else
-		{
-			SecurityManager.SaveRole(roleObj,function(i) { alert("Role Added Successfully! ID is "+i.ID);
-					location.reload();}, function() { alert ("Role does not added")} );
-		}
+        if(roleObj.roleName=="")
+            alert("Enter Role!");
+        else if(roleObj.roleDesc=="")
+            alert("Enter role's description");
+        else
+            {
+                var isRoleExist=false;
+                for(var i=0; i<roleObjArr.length && !isRoleExist; i++)
+                {    
+                    if(roleObjArr[i].roleName.toUpperCase()==roleObj.roleName.toUpperCase())
+                        isRoleExist=true;
+                }
+                if(isRoleExist)
+                    alert("Role Already Existed. Try another One!");            
+                else
+                {
+                    SecurityManager.SaveRole(roleObj,function(i) { alert("Role Added Successfully! ID is "+i.ID);
+                            location.reload();}, function() { alert ("Role does not added")} );
+                }
+            }
     }	//end save function
 	
 	var btnClear=document.getElementById("btnClear");
@@ -168,8 +175,8 @@ function editRole(hyperObj) {
 			<h1>Role Management</h1>
 			<span>Role Name: </span> <input type="text" id="txtName" ><br>
 			<span>Description: </span> <input type="text" id="txtDesc" ><br>        
-			<input type="submit" id="btnSave" value="Save">
-			<input type="submit" id="btnClear" value="Clear">
+			<input type="button" id="btnSave" value="Save">
+			<input type="button" id="btnClear" value="Clear">
 		</form>
     </div>
    

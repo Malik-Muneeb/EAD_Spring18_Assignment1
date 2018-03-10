@@ -9,15 +9,19 @@ function main() {
     btn.onclick = function() {
         var login=document.getElementById('txtLogin').value;
         var password=document.getElementById('txtPassword').value;
-        var result=SecurityManager.ValidateAdmin(login,password);
-        if(result==true)
-        {
-            window.location.href="adminHome.php";
-        }
+        if(login=="")
+            alert("Enter Login Name first!!!");
+        else if(password=="")
+            alert("Enter Password!!!");
         else
-        {
-            alert("Invalid UserName/Password");
-        }
+            {
+                 var result=SecurityManager.ValidateAdmin(login,password);
+                if(result==true)
+                    window.location.href="adminHome.php";
+                else
+                    alert("Invalid UserName/Password");
+            }
+       
         
     }
     var btn1=document.getElementById('btnLogin1');
@@ -25,19 +29,26 @@ function main() {
     	var userObjArr=SecurityManager.GetAllUsers();
     	var login=document.getElementById('txtLogin1').value;
         var password=document.getElementById('txtPassword1').value;
-        var isExist=false;
-        for(var i=0; i<userObjArr.length && !isExist; i++)
-        {
-        	if(userObjArr[i].login==login && userObjArr[i].password==password)
-        		isExist=true;
-        }
-        if(isExist)
-        {
-            window.location.href="userHome.php"//?name="+login;
-            localStorage.setItem('name', login);//to set value
-        }
+        if(login=="")
+            alert("Enter Login Name first!!!");
+        else if(password=="")
+            alert("Enter Password!!!");
         else
-        	alert("Invalid UserName/Password");
+            {
+                var isExist=false;
+                for(var i=0; i<userObjArr.length && !isExist; i++)
+                {
+                    if(userObjArr[i].login==login && userObjArr[i].password==password)
+                        isExist=true;
+                }
+                if(isExist)
+                {
+                    window.location.href="userHome.php"//?name="+login;
+                    localStorage.setItem('name', login);//to set value
+                }
+                else
+                    alert("Invalid UserName/Password");
+            }
     }
 }
 </script>

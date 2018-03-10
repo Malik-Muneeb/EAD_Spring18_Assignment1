@@ -100,20 +100,26 @@ function main() {
 		var perObj=new Object();
         perObj.perName=document.getElementById("txtName").value;
         perObj.perDesc=document.getElementById("txtDesc").value;
-        
-		var isPerExist=false;
-        for(var i=0; i<perObjArr.length && !isPerExist; i++)
-		{    
-			if(perObjArr[i].perName.toUpperCase()==perObj.perName.toUpperCase())
-				isPerExist=true;
-		}
-		if(isPerExist)
-			alert("Permission Already Existed. Try another One!");            
-		else
-		{
-			SecurityManager.SavePermission(perObj,function(i) { alert("Permission Added Successfully! ID is "+i.ID);
-					location.reload();}, function() { alert ("Permission does not added")} );
-		}
+        if(perObj.perName=="")
+            alert("Enter Permission!");
+        else if(perObj.perDesc=="")
+            alert("Enter permissions's description");
+        else
+            {
+                var isPerExist=false;
+                for(var i=0; i<perObjArr.length && !isPerExist; i++)
+                {    
+                    if(perObjArr[i].perName.toUpperCase()==perObj.perName.toUpperCase())
+                        isPerExist=true;
+                }
+                if(isPerExist)
+                    alert("Permission Already Existed. Try another One!");            
+                else
+                {
+                    SecurityManager.SavePermission(perObj,function(i) { alert("Permission Added Successfully! ID is "+i.ID);
+                            location.reload();}, function() { alert ("Permission does not added")} );
+                }
+            }
     }	//end save function
 	
 	var btnClear=document.getElementById("btnClear");
@@ -167,8 +173,8 @@ function editPer(hyperObj) {
 			<h1>Permission Management</h1>
 			<span>Permission Name: </span> <input type="text" id="txtName" ><br>
 			<span>Description: </span> <input type="text" id="txtDesc" ><br>        
-			<input type="submit" id="btnSave" value="Save">
-			<input type="submit" id="btnClear" value="Clear">
+			<input type="button" id="btnSave" value="Save">
+			<input type="button" id="btnClear" value="Clear">
 		</form>
     </div>
    

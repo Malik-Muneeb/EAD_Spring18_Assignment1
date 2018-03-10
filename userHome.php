@@ -27,7 +27,8 @@ function main() {
             ol.appendChild(li);
             document.body.appendChild(ol);
             var bold=document.createElement("b");
-            bold.appendChild(document.createTextNode("Permissions")); ol.appendChild(bold);
+            bold.appendChild(document.createTextNode("Permissions")); 
+            ol.appendChild(bold);
             for(var j=0; j<rolePerArr.length; j++)
                 {
                      if(rolePerArr[j].role==roles[i])
