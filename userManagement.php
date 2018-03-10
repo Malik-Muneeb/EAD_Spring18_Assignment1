@@ -234,17 +234,19 @@ function editUser(hyperObj) {
 
 <body onload="main();">
     <div  class="menu">
-        <a href="adminHome.php" >Home</a>
-        <a href="userManagement.php" >User Management</a>
-        <a href="roleManagement.php" >Role Management</a>
-        <a href="permissionManagement.php" >Permissions Management</a>
-        <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a>
-        <a href="userRoleManagement.php" >User-Role Assignment</a>
-        <a href="login.php" >Logout</a>
+       <ul>
+            <li> <a href="adminHome.php" >Home</a> </li>
+            <li> <a class="active" href="userManagement.php" >User Management</a> </li>
+            <li> <a href="roleManagement.php" >Role Management</a> </li>
+            <li> <a href="permissionManagement.php" >Permissions Management</a> </li>
+            <li> <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a> </li>
+            <li> <a href="userRoleManagement.php" >User-Role Assignment</a> </li>
+           <li> <a href="login.php" >Logout</a> </li>
+        </ul>
     </div>
 
     <div>
-	<form>
+	<form class="container1" style="float:left;">
         <h1>Users</h1>
         <span>Login: </span> <input type="text" id="txtLogin" ><br>
         <span>Password: </span> <input type="password" id="txtPassword" ><br>

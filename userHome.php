@@ -17,11 +17,13 @@ function main() {
     var rolePerArr=SecurityManager.GetAllRolePermissions();
     var per=[];
     var perCount=0;
+    var div=document.createElement("div");
+    div.setAttribute("class","rolePermission")
     var ol=document.createElement("ol");
     for(var i=0; i<roles.length; i++)
         {
-            debugger;
             var li=document.createElement("li");
+            li.setAttribute("class","roleProperty")
             var role=document.createTextNode("Role: "+roles[i]);
             li.appendChild(role);
             ol.appendChild(li);
@@ -44,6 +46,8 @@ function main() {
                     
                 }
         }
+    div.appendChild(ol);
+    document.body.appendChild(div);
    
 }
 </script>
@@ -51,8 +55,10 @@ function main() {
 
 <body onload="main();">
     <div  class="menu">
-        <a href="userHome.php" >Home</a>
-        <a href="login.php" >Logout</a>
+       <ul>
+            <li><a class="active" href="userHome.php" >Home</a></li>
+            <li><a href="login.php" >Logout</a></li>
+        </ul>
     </div>
 
     <div>

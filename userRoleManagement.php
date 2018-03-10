@@ -135,7 +135,7 @@ function main() {
 	var btnClear=document.getElementById("btnClear");
 	btnClear.onclick = function()
 	{
-        var user=document.getElementById("cmbPer");
+        var user=document.getElementById("cmbUser");
         user.options[user.selectedIndex].text="--Select--";
         var role = document.getElementById("cmbRole");
         role.options[role.selectedIndex].text="--Select--";
@@ -173,22 +173,24 @@ function editUserRole(hyperObj) {
 <head>
 <body onload="main();">
     <div  class="menu">
-        <a href="adminHome.php" >Home</a>
-        <a href="userManagement.php" >User Management</a>
-        <a href="roleManagement.php" >Role Management</a>
-        <a href="permissionManagement.php" >Permissions Management</a>
-        <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a>
-        <a href="userRoleManagement.php" >User-Role Assignment</a>
-        <a href="login.php" >Logout</a>
+       <ul>
+            <li> <a href="adminHome.php" >Home</a> </li>
+            <li> <a  href="userManagement.php" >User Management</a> </li>
+            <li> <a href="roleManagement.php" >Role Management</a> </li>
+            <li> <a href="permissionManagement.php" >Permissions Management</a> </li>
+            <li> <a href="rolePermissionManagement.php" >Role-Permissions Assignment</a> </li>
+            <li> <a class="active" href="userRoleManagement.php" >User-Role Assignment</a> </li>
+           <li> <a href="login.php" >Logout</a> </li>
+        </ul>
     </div>
 
     <div>
-		<form>
+		<form class="container1" style="float:left;">
 			<h1>User-Role Management</h1>
 			<span>User: </span>  <select name="" id="cmbUser"><option>--Select--</option></select><br>
 			<span>Role: </span>  <select name="" id="cmbRole"><option>--Select--</option></select><br><br>
-			<input type="submit" id="btnSave" value="Save">
-			<input type="submit" id="btnClear" value="Clear">
+			<input type="button" id="btnSave" value="Save">
+			<input type="button" id="btnClear" value="Clear">
 		</form>
     </div>
    
